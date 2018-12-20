@@ -10,6 +10,7 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 @Configuration
 public class MailConfig {
 	
+	
 	@Value("${mail.smtp.host}")
 	private String host;
 	
