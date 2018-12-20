@@ -109,7 +109,7 @@ public class AuthController {
 	ModelAndView register(ModelAndView modelAndView) throws FileNotFoundException {
 		
 		if(true)
-		throw new FileNotFoundException();
+			throw new FileNotFoundException("This is a deadful exception.");
 		
 		SiteUser user = new SiteUser();
 		
