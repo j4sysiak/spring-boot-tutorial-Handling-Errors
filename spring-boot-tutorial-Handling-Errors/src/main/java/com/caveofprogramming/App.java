@@ -13,6 +13,7 @@ import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerF
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 //import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -58,18 +59,93 @@ public class App extends SpringBootServletInitializer {
 		return new BCryptPasswordEncoder();
 	}
 	
-	@Bean
-	WebServerFactoryCustomizer<WebServerFactory> errorHandler() {
-		
-		return new WebServerFactoryCustomizer<WebServerFactory>() {
-   
-			@Override
-			public void customize(WebServerFactory container) {
-				((AbstractConfigurableWebServerFactory) container).addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/403"));
-				
-			}
-			
-		};
-	}
+	
+	//old - depritiated in Spring-boot 2.x
+//	@Bean
+//	EmbeddedServletContainerCustomizer errorHandler() {
+//		return new EmbeddedServletContainerCustomizer() {
+//
+//			@Override
+//			public void customize(ConfigurableEmbeddedServletContainer container) {
+//				container.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/403"));
+//			}
+//			
+//		};
+//	}
+	
+	// 1. sposób obsługi w Spring-boot 2.x
+//	@Bean
+//	WebServerFactoryCustomizer<WebServerFactory> errorHandler() {
+//		
+//		return new WebServerFactoryCustomizer<WebServerFactory>() {
+//   
+//			@Override
+//			public void customize(WebServerFactory container) {
+//				((AbstractConfigurableWebServerFactory) container).addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/403"));
+//				
+//			}
+//			
+//		};
+//	}
 
+	
+	
+	// 2. sposób obsługi w Spring-boot 2.x
+	@Configuration
+	public class ServerConfig{
+		
+		@Bean
+		public ConfigurableServletWebServerFactory webServerFactory(){
+			
+			TomcatServletWebServerFactory factory = new TomcatServletWebServerFactory();
+			
+			factory.addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/403"));
+			
+			return factory;
+		}
+	}
+	
 } 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
