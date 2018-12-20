@@ -3,9 +3,17 @@ package com.caveofprogramming;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.boot.web.embedded.tomcat.TomcatServletWebServerFactory;
+import org.springframework.boot.web.server.AbstractConfigurableWebServerFactory;
+import org.springframework.boot.web.server.ErrorPage;
+import org.springframework.boot.web.server.ErrorPageRegistry;
+import org.springframework.boot.web.server.WebServerFactory;
+import org.springframework.boot.web.server.WebServerFactoryCustomizer;
+import org.springframework.boot.web.servlet.server.ConfigurableServletWebServerFactory;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 //import org.springframework.boot.context.web.SpringBootServletInitializer;
 import org.springframework.context.annotation.Bean;
+import org.springframework.http.HttpStatus;
 import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -49,5 +57,19 @@ public class App extends SpringBootServletInitializer {
 	PasswordEncoder getEncoder() {
 		return new BCryptPasswordEncoder();
 	}
+	
+	@Bean
+	WebServerFactoryCustomizer<WebServerFactory> errorHandler() {
+		
+		return new WebServerFactoryCustomizer<WebServerFactory>() {
+   
+			@Override
+			public void customize(WebServerFactory container) {
+				((AbstractConfigurableWebServerFactory) container).addErrorPages(new ErrorPage(HttpStatus.FORBIDDEN, "/403"));
+				
+			}
+			
+		};
+	}
 
-}
+} 
