@@ -107,9 +107,10 @@ public class AuthController {
 	
 	@RequestMapping(value="/register", method=RequestMethod.GET)
 	ModelAndView register(ModelAndView modelAndView) throws FileNotFoundException {
-		
-		if(true)
-			throw new FileNotFoundException("This is a deadful exception.");
+
+//      testowanie:  GlobalExceptionHandler 
+//		if(true)
+//			throw new FileNotFoundException("This is a deadful exception.");
 		
 		SiteUser user = new SiteUser();
 		
