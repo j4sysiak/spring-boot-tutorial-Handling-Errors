@@ -3,6 +3,7 @@ package com.caveofprogramming.controllers;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
@@ -21,6 +22,9 @@ public class PageController {
 	@Autowired
 	private StatusUpdateService statusUpdateService;
 	
+	@Value("${message.error.forbidden}")
+	private String accessDeniedMessage;
+	
 	@RequestMapping("/")
 	ModelAndView home(ModelAndView modelAndView) {
 		
@@ -33,13 +37,19 @@ public class PageController {
 		return modelAndView;
 	}
 	
+	@RequestMapping("/403")
+	ModelAndView accessDenied(ModelAndView modelAndView) {
+
+		modelAndView.getModel().put("message", accessDeniedMessage);
+		modelAndView.setViewName("app.message");
+		return modelAndView;
+	}
+	
 	@RequestMapping("/about")
 	String about() {
 		return "app.about";
 	}
-
-
-	
+ 
 }
 
 

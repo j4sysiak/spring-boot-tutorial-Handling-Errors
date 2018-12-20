@@ -89,3 +89,8 @@ textarea {
 	color: red;
 	font-weight: bold;
 }
+
+.message {
+	font-size: larger;
+	margin-top: 50px;
+}
