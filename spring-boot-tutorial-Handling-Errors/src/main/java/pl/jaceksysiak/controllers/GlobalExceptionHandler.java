@@ -1,4 +1,4 @@
-package com.caveofprogramming.controllers;
+package pl.jaceksysiak.controllers;
 
 import javax.servlet.http.HttpServletRequest;
 
